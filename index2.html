@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moldova Azi – Revista Națională</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --gold: #B8860B;
+    --navy: #1A2744;
+    --ink: #1a1a1a;
+    --gray: #555;
+    --lightgray: #888;
+    --rule: #1A2744;
+    --bg: #FAFAF7;
+    --col-gap: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #D0C8B0;
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--ink);
+  }
+
+  /* ============ PAGE ============ */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--bg);
+    margin: 12px auto;
+    padding: 14mm 14mm 12mm 14mm;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    page-break-after: always;
+  }
+
+  /* ============ GLOBAL RULES ============ */
+  hr.thick { border: none; border-top: 3px solid var(--navy); margin: 4px 0; }
+  hr.thin  { border: none; border-top: 1px solid var(--navy); margin: 3px 0; }
+  hr.red   { border: none; border-top: 2px solid var(--red); margin: 3px 0; }
+  hr.gold  { border: none; border-top: 1px solid var(--gold); margin: 2px 0; }
+
+  /* ============ PAGE HEADER (all inner pages) ============ */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 7.5pt;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 5px;
+  }
+  .page-header .section-label {
+    background: var(--navy);
+    color: #fff;
+    padding: 1px 7px;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  /* ============ MASTHEAD ============ */
+  .masthead {
+    text-align: center;
+    padding: 6px 0 4px;
+    border-bottom: 1px solid var(--navy);
+  }
+  .masthead .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 68pt;
+    font-weight: 900;
+    color: var(--navy);
+    letter-spacing: -2px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .masthead .subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 9pt;
+    color: var(--red);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .masthead-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 7.5pt;
+    color: var(--gray);
+    border-top: 1px solid #ccc;
+    border-bottom: 3px double var(--navy);
+    padding: 3px 0;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .masthead-meta .price {
+    background: var(--red);
+    color: #fff;
+    padding: 1px 6px;
+    font-weight: 600;
+  }
+
+  /* ============ SECTION TITLE ============ */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: var(--ink);
+    margin: 6px 0 8px;
+    text-align: center;
+  }
+
+  /* ============ ARTICLE HEADLINE ============ */
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .headline.xl { font-size: 20pt; margin-bottom: 5px; }
+  .headline.lg { font-size: 14pt; margin-bottom: 4px; }
+  .headline.md { font-size: 11pt; margin-bottom: 3px; }
+  .headline.sm { font-size: 9pt; margin-bottom: 2px; }
+
+  /* ============ BODY TEXT ============ */
+  .body-text {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 7.8pt;
+    line-height: 1.55;
+    color: var(--ink);
+    text-align: justify;
+    hyphens: auto;
+  }
+  .body-text p { margin-bottom: 5px; }
+  .body-text p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    float: left;
+    line-height: 0.85;
+    margin: 2px 4px 0 0;
+    color: var(--navy);
+  }
+
+  /* ============ BYLINE / SOURCE ============ */
+  .byline {
+    font-family: 'Oswald', sans-serif;
+    font-size: 6.8pt;
+    color: var(--lightgray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .byline strong { color: var(--gray); }
+
+  /* ============ CAPTION ============ */
+  .caption {
+    font-family: 'Source Serif 4', serif;
+    font-size: 6.5pt;
+    font-style: italic;
+    color: var(--gray);
+    text-align: center;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* ============ IMAGES ============ */
+  .article-img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    margin-bottom: 2px;
+  }
+  .img-border { border: 1px solid #ccc; }
+
+  /* ============ PULL QUOTE ============ */
+  .pull-quote {
+    border-top: 2px solid var(--navy);
+    border-bottom: 2px solid var(--navy);
+    padding: 6px 8px;
+    margin: 8px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    color: var(--navy);
+    text-align: center;
+  }
+
+  /* ============ COLUMNS ============ */
+  .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--col-gap); }
+  .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--col-gap); }
+  .col-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--col-gap); }
+  .col-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--col-gap); }
+  .col-3-1 { display: grid; grid-template-columns: 3fr 1fr; gap: var(--col-gap); }
+
+  .col-divider { border-right: 1px solid #ccc; padding-right: var(--col-gap); }
+  .col-divider:last-child { border-right: none; padding-right: 0; }
+
+  /* ============ BOX / SIDEBAR ============ */
+  .sidebar-box {
+    background: #F0EDE4;
+    border: 1px solid #ccc;
+    border-top: 3px solid var(--navy);
+    padding: 8px 9px;
+  }
+  .sidebar-box.red-top { border-top-color: var(--red); }
+  .sidebar-box.gold-top { border-top-color: var(--gold); }
+  .sidebar-box .box-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 5px;
+    color: var(--navy);
+  }
+  .sidebar-box.red-top .box-title { color: var(--red); }
+
+  /* ============ CURIOSITIES FOOTER ============ */
+  .curiosity-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--navy);
+    color: #E8E0CF;
+    padding: 5px 14mm;
+    font-family: 'Source Serif 4', serif;
+    font-size: 6.8pt;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .curiosity-bar .curio-label {
+    font-family: 'Oswald', sans-serif;
+    font-style: normal;
+    font-size: 6.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-right: 6px;
+  }
+
+  /* ============ PAGE NUMBER ============ */
+  .page-number {
+    position: absolute;
+    bottom: 30px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 8pt;
+    color: var(--lightgray);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .page-number.left { left: 14mm; }
+  .page-number.right { right: 14mm; }
+
+  /* ============ WEATHER TABLE ============ */
+  .weather-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin: 6px 0;
+  }
+  .weather-cell {
+    background: #EEF2F8;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 4px;
+    text-align: center;
+  }
+  .weather-cell .city {
+    font-family: 'Oswald', sans-serif;
+    font-size: 7pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .weather-cell .temp {
+    font-family: 'Playfair Display', serif;
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--red);
+  }
+  .weather-cell .cond {
+    font-size: 6.5pt;
+    color: var(--gray);
+    font-style: italic;
+  }
+  .weather-cell .icon { font-size: 14pt; }
+
+  /* ============ COVER SPECIFIC ============ */
+  .cover-banner {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 3px 0;
+    margin-bottom: 5px;
+  }
+  .cover-main-img {
+    width: 100%;
+    height: 195px;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    border: 1px solid #bbb;
+    margin-bottom: 3px;
+  }
+  .cover-main-caption {
+    font-size: 6.5pt;
+    font-style: italic;
+    color: var(--gray);
+    text-align: right;
+    margin-bottom: 8px;
+  }
+  .cover-toc {
+    background: var(--navy);
+    color: #E8E0CF;
+    padding: 7px 10px;
+    margin-top: 6px;
+  }
+  .cover-toc .toc-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .cover-toc .toc-item {
+    font-size: 7pt;
+    padding: 1.5px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted rgba(255,255,255,0.15);
+  }
+  .cover-toc .toc-pg {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 6.5pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 1px 5px;
+    margin-bottom: 3px;
+    color: #fff;
+  }
+  .tag.red { background: var(--red); }
+  .tag.navy { background: var(--navy); }
+  .tag.gold { background: var(--gold); }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ████████████████████  PAGE 1 – COVER  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+
+  <div class="cover-banner">
+    ✦ Agricultură · Tehnologii · Inteligență Artificială · Meteo · Știri Internaționale ✦
+  </div>
+
+  <div class="masthead">
+    <div class="title">Moldova Azi</div>
+    <div class="subtitle">Revistă de Știri, Știință &amp; Societate</div>
+  </div>
+  <div class="masthead-meta">
+    <span>Vol. I &nbsp;·&nbsp; Nr. 1</span>
+    <span>21 Octombrie 2024</span>
+    <span>Chișinău, Republica Moldova</span>
+    <span class="price">5 LEI</span>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <div class="col-3-1" style="gap: 12px; align-items: start;">
+      <div>
+        <span class="tag red">Principalul subiect</span>
+        <h1 class="headline xl">Moldova Agricolă: Recolta de Toamnă 2024 Stabilește un Nou Record Istoric</h1>
+        <div class="byline"><strong>De la corespondentul nostru</strong> &nbsp;·&nbsp; Chișinău, 21 oct. 2024</div>
+        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80" class="cover-main-img img-border" alt="Recolte Moldova" onerror="this.style.background='#c8d8c0';this.alt='Câmpuri agricole';this.style.display='block'">
+        <div class="cover-main-caption">Câmpuri aurii de grâu în sudul Republicii Moldova, octombrie 2024. Foto: Arhiva redacției</div>
+        <div class="body-text">
+          <p>Republica Moldova a înregistrat în această toamnă una dintre cele mai abundente recolte din ultimii douăzeci de ani, cu o producție totală de cereale care depășește 4,2 milioane de tone, potrivit datelor preliminare furnizate de <strong>Ministerul Agriculturii și Industriei Alimentare</strong>. Grâul, porumbul și floarea-soarelui au dominat sezonul, contribuind în mod semnificativ la creșterea exporturilor agricole ale țării.</p>
+          <p>Ministra Agriculturii, <em>Ludmila Trofimova</em>, a declarat miercuri că această performanță se datorează în mare parte <strong>tehnologiilor moderne de irigare</strong> implementate în raioanele din sud, dar și condițiilor meteorologice favorabile din lunile iulie–septembrie.</p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="sidebar-box">
+          <div class="box-title">📌 Știri pe scurt</div>
+          <div class="body-text" style="font-size: 7.2pt;">
+            <p style="padding-bottom:4px; border-bottom:1px solid #ddd;"><strong>Tehnologii:</strong> Primul centru de inovare digitală din Moldova a fost inaugurat la Chișinău.</p>
+            <p style="padding-bottom:4px; border-bottom:1px solid #ddd;"><strong>AI:</strong> Moldova pilot-testează un sistem de AI pentru predicția vremii cu acuratețe de 94%.</p>
+            <p style="padding-bottom:4px; border-bottom:1px solid #ddd;"><strong>Meteo:</strong> Temperaturi sub zero așteptate în nord la sfârșitul lui octombrie.</p>
+            <p><strong>Internațional:</strong> Prețul petrolului scade sub $75 pe baril pentru prima dată în 2024.</p>
+          </div>
+        </div>
+
+        <div class="cover-toc">
+          <div class="toc-title">Cuprins</div>
+          <div class="toc-item"><span>Agricultură în Moldova</span><span class="toc-pg">Pg. 2</span></div>
+          <div class="toc-item"><span>Tehnologii &amp; Digital</span><span class="toc-pg">Pg. 3</span></div>
+          <div class="toc-item"><span>Inteligența Artificială</span><span class="toc-pg">Pg. 4</span></div>
+          <div class="toc-item"><span>Meteo &amp; Climă</span><span class="toc-pg">Pg. 5</span></div>
+          <div class="toc-item"><span>Știri din Lume</span><span class="toc-pg">Pg. 6</span></div>
+        </div>
+
+        <div class="sidebar-box gold-top" style="font-size: 7pt;">
+          <div class="box-title" style="color: var(--gold);">💬 Citat al Zilei</div>
+          <div class="pull-quote" style="font-size: 8pt; border-color: var(--gold); padding: 5px 6px;">
+            „Agricultura este temelia pe care se sprijină civilizația."
+          </div>
+          <div style="text-align:right; font-size: 6.5pt; color: var(--gray); font-style: italic;">— Daniel Webster</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-number right">Pag. 1</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">🌱 Știați că?</span>
+    Moldova este printre primii 10 exportatori mondiali de nuci și printre primii 5 producători europeni de prune uscate. Suprafața agricolă reprezintă peste 74% din teritoriul țării.
+  </div>
+</div>
+
+
+<!-- ████████████████████  PAGE 2 – AGRICULTURE  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+  <div class="page-header">
+    <span>Moldova Azi &nbsp;·&nbsp; Vol. I, Nr. 1</span>
+    <span class="section-label">🌾 Agricultură</span>
+    <span>21 Octombrie 2024</span>
+  </div>
+  <hr class="thick">
+  <hr class="thin" style="margin-top:2px;">
+
+  <div class="section-title">Agricultură</div>
+
+  <div class="col-3" style="align-items: start; margin-top: 4px;">
+
+    <!-- COL 1 -->
+    <div class="col-divider">
+      <span class="tag red">Exclusiv</span>
+      <h2 class="headline lg">Viticultură 2024: Struguri de Calitate Superioară după Vara Secetoasă</h2>
+      <div class="byline"><strong>Ana Rotaru</strong>, corespondentă agricolă &nbsp;|&nbsp; Hîncești, 18 oct.</div>
+      <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=400&q=80" class="article-img img-border" style="height:100px; object-fit:cover;" alt="Vie Moldova" onerror="this.style.cssText='height:100px;background:#b5c4a0;display:block;width:100%;'">
+      <div class="caption">Culesul strugurilor în podgoria Codru, octombrie 2024. Foto: A. Rotaru</div>
+      <div class="body-text" style="margin-top: 5px;">
+        <p>Vara uscată din 2024 a dat roade neașteptate pentru viticultorii din Moldova: <strong>concentrația de zaharuri în boabe</strong> a atins niveluri record în regiunile Codru și Ștefan Vodă, promițând vinuri de o calitate excepțională.</p>
+        <p>Producătorii de la <em>Purcari</em> și <em>Crama Asconi</em> estimează că exporturile de vin vor crește cu <strong>18%</strong> față de 2023, în special pe piețele din Polonia, Germania și Țările Baltice.</p>
+        <p><em>„Lipsa precipitațiilor din iulie ne-a îngrijorat inițial, dar drept rezultat am obținut must cu o densitate extraordinară,"</em> a precizat Mihai Cebotari, oenolog principal la <strong>Vinăria din Vale</strong>.</p>
+      </div>
+    </div>
+
+    <!-- COL 2 -->
+    <div class="col-divider">
+      <span class="tag navy">Raport</span>
+      <h2 class="headline lg">Irigarea Modernă Salvează Recolta în Raioanele de Sud</h2>
+      <div class="byline"><strong>Serviciul de presă MAIA</strong> &nbsp;|&nbsp; Cahul, 15 oct.</div>
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" class="article-img img-border" style="height:100px; object-fit:cover;" alt="Irigare" onerror="this.style.cssText='height:100px;background:#a0c8d8;display:block;width:100%;'">
+      <div class="caption">Sistem de irigare prin picurare, raionul Cahul. Sursa: MAIA</div>
+      <div class="body-text" style="margin-top: 5px;">
+        <p>Un program de <strong>600 milioane lei</strong> finanțat de Guvern și Banca Mondială a permis instalarea a <em>12.000 hectare</em> de sisteme de irigare modernă în raioanele Cahul, Cantemir și Leova, cele mai afectate de secetă.</p>
+        <p>Fermierii beneficiari raportează o creștere a productivității cu <strong>35–40%</strong> față de perioadele fără irigare. Programul urmărește extinderea suprafețelor irigate la <em>50.000 ha</em> până în 2027.</p>
+      </div>
+
+      <div class="pull-quote" style="margin-top: 8px;">
+        „Fără apă, câmpul moldovenesc devine deșert. Cu ea, devine grădina Europei."
+      </div>
+      <div class="byline" style="text-align:center;">— Ministrul Agriculturii, oct. 2024</div>
+    </div>
+
+    <!-- COL 3 -->
+    <div>
+      <span class="tag gold">Actualitate</span>
+      <h2 class="headline lg">Prețul Cerealelor Scade pe Piața Internă: Fermierii Solicită Sprijin</h2>
+      <div class="byline"><strong>Petru Grosu</strong>, Agrarpres &nbsp;|&nbsp; Chișinău, 20 oct.</div>
+      <div class="body-text" style="margin-top: 5px;">
+        <p>În pofida recoltei record, prețurile grâului pe piața internă au scăzut cu <strong>12%</strong> față de luna septembrie, din cauza ofertei excedentare și concurenței din Ucraina și România. Asociația Fermierilor din Moldova a solicitat Guvernului <em>introducerea unor taxe de export</em> temporare și constituirea unui fond de intervenție.</p>
+        <p><em>„Producem mai mult ca niciodată, dar câștigăm mai puțin. Paradoxul agriculturii moldovenești,"</em> a declarat Ion Pelivan, președintele asociației.</p>
+      </div>
+
+      <div class="sidebar-box red-top" style="margin-top: 8px;">
+        <div class="box-title">📊 Cifre-cheie 2024</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>🌾 <strong>Grâu:</strong> 1,6 mil. tone (+9%)</p>
+          <p>🌽 <strong>Porumb:</strong> 2,1 mil. tone (+14%)</p>
+          <p>🌻 <strong>Floarea-soarelui:</strong> 510 mii tone (+7%)</p>
+          <p>🍇 <strong>Struguri:</strong> 380 mii tone (+3%)</p>
+          <p>🍎 <strong>Fructe totale:</strong> 720 mii tone (+11%)</p>
+          <p style="margin-top:4px; font-style:italic; color: var(--gray);">Sursa: Ministerul Agriculturii și Industriei Alimentare, oct. 2024</p>
+        </div>
+      </div>
+
+      <div class="sidebar-box" style="margin-top: 8px;">
+        <div class="box-title">🚜 Subvenții AIPA</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>Agenția de Intervenție și Plăți în Agricultură (<strong>AIPA</strong>) a achitat în primele 9 luni ale anului <em>852 milioane lei</em> în subvenții pentru 28.400 de fermieri.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-number left">Pag. 2</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">🌾 Glosar</span>
+    <strong style="color:#E8D8A0;">Must</strong> = sucul proaspăt obținut din struguri zdrobiți, înainte de fermentare. &nbsp;·&nbsp;
+    <strong style="color:#E8D8A0;">AIPA</strong> = Agenția de Intervenție și Plăți în Agricultură, instituție care gestionează subvențiile agricole din Moldova.
+  </div>
+</div>
+
+
+<!-- ████████████████████  PAGE 3 – TECHNOLOGIES  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+  <div class="page-header">
+    <span>Moldova Azi &nbsp;·&nbsp; Vol. I, Nr. 1</span>
+    <span class="section-label">💻 Tehnologii</span>
+    <span>21 Octombrie 2024</span>
+  </div>
+  <hr class="thick">
+  <hr class="red" style="margin-top:2px;">
+
+  <div class="section-title">Tehnologii &amp; Digital</div>
+
+  <!-- TOP STORY - full width -->
+  <div class="col-2-1" style="align-items:start; margin-top:6px;">
+    <div>
+      <span class="tag navy">Breaking</span>
+      <h2 class="headline xl" style="font-size:18pt;">Moldova Lansează Primul Hub de Inovare Digitală din Regiune: „Tekwill 2.0" Deschide Porțile</h2>
+      <div class="byline"><strong>Vadim Ciobanu</strong>, TechReport MD &nbsp;|&nbsp; Chișinău, 20 oct. 2024</div>
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" class="article-img img-border" style="height:120px; object-fit:cover;" alt="Tech Hub" onerror="this.style.cssText='height:120px;background:#1a2744;display:block;width:100%;'">
+      <div class="caption">Spațiul de co-working din noul centru Tekwill 2.0, str. Studenților, Chișinău. Foto: V. Ciobanu / TechReport MD</div>
+      <div class="col-2" style="gap: 10px; margin-top:5px;">
+        <div class="body-text">
+          <p>Republica Moldova a inaugurat marți <strong>Tekwill 2.0</strong>, un centru de inovare digitală de 4.500 m² situat în incinta Universității Tehnice din Chișinău, cu o investiție totală de <em>12 milioane de euro</em>, cofinanțată de UE și Suedia.</p>
+          <p>Hubul găzduiește <strong>120 de startup-uri</strong> și oferă programe de accelerare, laboratoare de robotică, spații de prototipare rapidă și cursuri intensive de programare pentru tineri.</p>
+        </div>
+        <div class="body-text">
+          <p><em>„Moldova poate deveni Silicon Valley-ul Europei de Est dacă continuăm să investim în oameni și infrastructură digitală,"</em> a declarat <strong>Dorin Recean</strong>, Prim-ministrul Republicii Moldova, la ceremonia de inaugurare.</p>
+          <p>Până în 2026, centrul intenționează să formeze <strong>5.000 de specialiști IT</strong> și să atragă investiții de cel puțin 30 milioane euro în start-up-urile autohtone.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="sidebar-box">
+        <div class="box-title">🌐 Moldova Digitală 2030</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>Strategia națională prevede:</p>
+          <p>✔ <strong>100% broadband</strong> în toate localitățile</p>
+          <p>✔ <em>E-governance</em> integral până în 2027</p>
+          <p>✔ <strong>25.000</strong> noi locuri de muncă IT</p>
+          <p>✔ Export IT de <em>1 mld. USD</em> anual</p>
+          <p style="margin-top:4px; color:var(--gray); font-style:italic;">Sursa: MTIC Moldova, sept. 2024</p>
+        </div>
+      </div>
+
+      <div class="sidebar-box red-top">
+        <div class="box-title">📱 Top 3 Start-up-uri MD</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p><strong>1. Simpals:</strong> platformă media digitală, 2 mil. utilizatori</p>
+          <p><strong>2. Cargotrack:</strong> logistică AI, extins în 12 țări</p>
+          <p><strong>3. Dataculture:</strong> analiză date agricole prin satelit</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="thin" style="margin: 8px 0;">
+
+  <!-- BOTTOM ROW - 3 columns -->
+  <div class="col-3" style="align-items:start;">
+    <div class="col-divider">
+      <span class="tag red">Rețele</span>
+      <h3 class="headline md">5G în Moldova: Primele Teste în Chișinău și Bălți</h3>
+      <div class="byline"><strong>Orange Moldova</strong> &nbsp;|&nbsp; Chișinău, 14 oct.</div>
+      <div class="body-text">
+        <p>Orange Moldova și Moldtelecom au finalizat testele tehnice pentru rețeaua <strong>5G</strong> în zonele centrale ale Chișinăului și Bălților. Comercializarea serviciilor este planificată pentru <em>trimestrul I din 2025</em>.</p>
+        <p>Vitezele măsurate în teste au atins <strong>1,2 Gbps</strong>, de circa 20 de ori mai rapid decât LTE actual.</p>
+      </div>
+    </div>
+
+    <div class="col-divider">
+      <span class="tag navy">Educație</span>
+      <h3 class="headline md">Codarea Obligatorie din Clasa a V-a: Noul Curriculum Național</h3>
+      <div class="byline"><strong>Ministerul Educației</strong> &nbsp;|&nbsp; Chișinău, 17 oct.</div>
+      <div class="body-text">
+        <p>Începând cu anul de studii 2025–2026, <strong>informatica și codarea</strong> devin discipline obligatorii de la clasa a V-a în toate școlile din Republica Moldova, inclusiv rurale.</p>
+        <p>Ministerul pregătește <em>1.800 de profesori</em> prin cursuri intensive finanțate de UNICEF și Banca Mondială.</p>
+      </div>
+    </div>
+
+    <div>
+      <span class="tag gold">Securitate</span>
+      <h3 class="headline md">Atacuri Cibernetice asupra Instituțiilor Publice: CERT-MD Lansează Alertă</h3>
+      <div class="byline"><strong>CERT-MD</strong> &nbsp;|&nbsp; Chișinău, 19 oct.</div>
+      <div class="body-text">
+        <p>Centrul de Răspuns la Incidente Cibernetice (<strong>CERT-MD</strong>) a emis o alertă după o serie de <em>atacuri DDoS</em> îndreptate asupra portalurilor guvernamentale moldovenești.</p>
+        <p>Atacurile, atribuite unui grup pro-rus, au dus la <strong>indisponibilizarea temporară</strong> a mai multor servicii electronice de stat timp de 3–6 ore pe 16 octombrie.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-number left">Pag. 3</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">💻 Glosar</span>
+    <strong style="color:#E8D8A0;">DDoS</strong> = atac cibernetic care inundă serverele cu trafic fals, provocând blocarea serviciului. &nbsp;·&nbsp;
+    <strong style="color:#E8D8A0;">5G</strong> = a cincea generație de rețele mobile, cu viteze de până la 20 Gbps și latență sub 1 milisecundă.
+  </div>
+</div>
+
+
+<!-- ████████████████████  PAGE 4 – AI  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+  <div class="page-header">
+    <span>Moldova Azi &nbsp;·&nbsp; Vol. I, Nr. 1</span>
+    <span class="section-label">🤖 Inteligență Artificială</span>
+    <span>21 Octombrie 2024</span>
+  </div>
+  <hr class="thick">
+  <hr class="thin" style="margin-top:2px; border-color: var(--red);">
+
+  <div class="section-title">Inteligența Artificială în Ziua de Astăzi</div>
+
+  <div class="col-2" style="align-items:start; margin-top:6px; gap: 16px;">
+
+    <!-- LEFT - main story -->
+    <div>
+      <span class="tag red">Moldova & AI</span>
+      <h2 class="headline lg">Sistemul AI Dezvoltat la UTM Prevede Seceta cu 3 Luni Înainte</h2>
+      <div class="byline"><strong>Dr. Mihai Tîrziman</strong>, UTM Chișinău &nbsp;|&nbsp; Chișinău, 16 oct. 2024</div>
+      <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" class="article-img img-border" style="height:110px; object-fit:cover;" alt="AI Visualization" onerror="this.style.cssText='height:110px;background:#1a2744;display:block;width:100%;'">
+      <div class="caption">Vizualizarea rețelei neuronale folosite pentru predicția meteorologică. Sursa: Laborator AI, UTM</div>
+      <div class="body-text" style="margin-top:5px;">
+        <p>Cercetătorii de la <strong>Universitatea Tehnică a Moldovei</strong> au prezentat un sistem de inteligență artificială capabil să prezică cu o acuratețe de <em>94%</em> perioadele de secetă cu până la <strong>90 de zile înainte</strong>, utilizând date din sateliți, stații meteo și senzori de sol.</p>
+        <p>Modelul, bazat pe o arhitectură de tip <em>Transformer</em> antrenată pe 40 de ani de date climatice moldovenești, a fost validat în colaborare cu <strong>Serviciul Hidrometeorologic de Stat</strong> și parteneri din România și Germania.</p>
+        <p><em>„Fermierilor li se vor trimite alerte automate pe telefon, cu recomandări de irigare adaptate,"</em> explică prof. <strong>Ion Cojocari</strong>, coordonatorul proiectului. Sistemul urmează să fie implementat la nivel național în 2025.</p>
+      </div>
+
+      <hr class="red" style="margin: 8px 0;">
+
+      <span class="tag navy">Global</span>
+      <h3 class="headline md">ChatGPT a Atins 200 Milioane Utilizatori: Ce Înseamnă pentru Moldova?</h3>
+      <div class="byline"><strong>Reuters / Redacția Moldova Azi</strong> &nbsp;|&nbsp; New York / Chișinău, 2 oct. 2024</div>
+      <div class="body-text">
+        <p>OpenAI a anunțat că <strong>ChatGPT</strong> a depășit 200 de milioane de utilizatori activi săptămânali, dublând cifra din 2023. Experții moldoveni avertizează că <em>adoptarea lentă a instrumentelor AI</em> în companiile locale poate crea un decalaj față de concurența europeană.</p>
+        <p>Conform unui studiu realizat de <strong>Asociația IT din Moldova</strong>, doar <em>18% din firmele locale</em> utilizează soluții AI, față de media europeană de 42%.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+
+      <div class="sidebar-box" style="border-top-color: #8B0000;">
+        <div class="box-title" style="color:#8B0000;">⚠️ Riscuri AI – Ce Spun Experții</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>La Conferința <em>AI &amp; Society</em> de la Chișinău, experții au identificat principalele riscuri pentru Moldova:</p>
+          <p>🔴 <strong>Dezinformare</strong> generată automat în campanii electorale</p>
+          <p>🔴 <strong>Fraude financiare</strong> prin deepfake video</p>
+          <p>🔴 Înlocuirea locurilor de muncă în <strong>call-center-e</strong> și contabilitate</p>
+          <p>🟢 <em>Oportunitate:</em> AI poate digitaliza agricultura, sănătatea și educația</p>
+          <p style="color:var(--gray); font-style:italic; margin-top:4px;">Sursa: Forumul AI Moldova, oct. 2024</p>
+        </div>
+      </div>
+
+      <div class="sidebar-box gold-top">
+        <div class="box-title" style="color:var(--gold);">🏛️ Legislație AI în UE</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>Regulamentul european <strong>AI Act</strong> a intrat în vigoare în august 2024. Moldova, candidată la aderarea UE, pregătește o <em>lege națională AI</em> aliniată normelor europene, cu termen de adoptare în <strong>trimestrul II 2025</strong>.</p>
+          <p style="color:var(--gray); font-style:italic;">Sursa: Cancelaria de Stat, oct. 2024</p>
+        </div>
+      </div>
+
+      <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&q=80" class="article-img img-border" style="height:90px; object-fit:cover;" alt="AI Robot" onerror="this.style.cssText='height:90px;background:#2a3a5a;display:block;width:100%;'">
+      <div class="caption">Robot industrial cu sisteme AI în fabrica Supraten, Chișinău. Foto: Arhivă</div>
+
+      <div class="sidebar-box red-top">
+        <div class="box-title">🎓 Cursuri AI Gratuite</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>Platforma <strong>e-Moldova.md</strong> lansează în noiembrie 10 cursuri gratuite de AI pentru cetățeni, de la nivel începător la avansat. Înregistrările sunt deschise pe <em>portal.egov.md</em>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-number left">Pag. 4</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">🤖 Glosar</span>
+    <strong style="color:#E8D8A0;">Transformer</strong> = arhitectură de rețea neuronală care stă la baza ChatGPT și altor modele AI moderne. &nbsp;·&nbsp;
+    <strong style="color:#E8D8A0;">Deepfake</strong> = conținut video/audio fals creat cu ajutorul AI, care imită aspectul sau vocea unei persoane reale.
+  </div>
+</div>
+
+
+<!-- ████████████████████  PAGE 5 – METEO  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+  <div class="page-header">
+    <span>Moldova Azi &nbsp;·&nbsp; Vol. I, Nr. 1</span>
+    <span class="section-label">🌤️ Meteo &amp; Climă</span>
+    <span>21 Octombrie 2024</span>
+  </div>
+  <hr class="thick">
+  <hr class="thin" style="margin-top:2px; border-color: #2980b9;">
+
+  <div class="section-title">Meteo &amp; Știri din Lume</div>
+
+  <!-- WEATHER GRID -->
+  <div class="weather-grid" style="margin-top: 6px;">
+    <div class="weather-cell">
+      <div class="city">Chișinău</div>
+      <div class="icon">🌤️</div>
+      <div class="temp">+14°</div>
+      <div class="cond">Parțial noros</div>
+    </div>
+    <div class="weather-cell">
+      <div class="city">Bălți</div>
+      <div class="icon">🌧️</div>
+      <div class="temp">+9°</div>
+      <div class="cond">Ploi slabe</div>
+    </div>
+    <div class="weather-cell">
+      <div class="city">Cahul</div>
+      <div class="icon">☀️</div>
+      <div class="temp">+17°</div>
+      <div class="cond">Însorit</div>
+    </div>
+    <div class="weather-cell">
+      <div class="city">Soroca</div>
+      <div class="icon">🌥️</div>
+      <div class="temp">+10°</div>
+      <div class="cond">Înnurat</div>
+    </div>
+    <div class="weather-cell">
+      <div class="city">Tiraspol</div>
+      <div class="icon">🌤️</div>
+      <div class="temp">+15°</div>
+      <div class="cond">Soare și nori</div>
+    </div>
+  </div>
+  <div class="byline" style="text-align:right; margin-top:2px;">Sursa: Serviciul Hidrometeorologic de Stat al RM, 21 oct. 2024, ora 08:00</div>
+
+  <hr class="thin" style="margin: 8px 0;">
+
+  <div class="col-3" style="align-items:start;">
+
+    <!-- COL 1 -->
+    <div class="col-divider">
+      <span class="tag navy">Prognoză</span>
+      <h2 class="headline lg">Îngheț Timpuriu în Nord: Fermierii Avertizați</h2>
+      <div class="byline"><strong>SHS Moldova</strong> &nbsp;|&nbsp; Chișinău, 21 oct.</div>
+      <img src="https://images.unsplash.com/photo-1504608524841-42584120d693?w=400&q=80" class="article-img img-border" style="height:85px; object-fit:cover;" alt="Weather" onerror="this.style.cssText='height:85px;background:#5080a0;display:block;width:100%;'">
+      <div class="caption">Front de aer arctic deasupra Europei de Est. Sursa: SHS Moldova</div>
+      <div class="body-text" style="margin-top:4px;">
+        <p>Serviciul Hidrometeorologic de Stat a emis un <strong>Cod Galben de îngheț</strong> pentru raioanele Briceni, Ocnița și Dondușeni în perioada <em>23–26 octombrie</em>, cu temperaturi nocturne ce pot coborî până la <strong>−3°C</strong>.</p>
+        <p>Fermierii sunt sfătuiți să <em>recolteze urgent</em> culturile sensibile la ger și să protejeze plantațiile de pomi fructiferi.</p>
+      </div>
+    </div>
+
+    <!-- COL 2 -->
+    <div class="col-divider">
+      <span class="tag red">Climat</span>
+      <h2 class="headline lg">2024 – Cel Mai Cald An din Istoria Măsurătorilor în Moldova</h2>
+      <div class="byline"><strong>Ana Munteanu</strong>, climatolog &nbsp;|&nbsp; Chișinău, 19 oct.</div>
+      <div class="body-text">
+        <p>Temperatura medie anuală înregistrată în Moldova pentru primele 9 luni ale lui 2024 a depășit cu <strong>1,8°C</strong> media climatologică a perioadei 1981–2010. Această abatere plasează 2024 pe <em>primul loc</em> în clasamentul anilor cei mai calzi din istoria măsurătorilor.</p>
+        <p>Specialiștii avertizează că tendința de încălzire accelerată a Moldovei (<strong>+0,4°C pe deceniu</strong>) impune adaptarea urgentă a agriculturii, gestionarea rezervelor de apă și revizuirea normelor de construcție.</p>
+      </div>
+
+      <div class="pull-quote" style="font-size: 8pt; margin-top: 7px;">
+        „Moldova se încălzește de două ori mai rapid decât media globală. Nu avem timp de irosit."
+      </div>
+      <div class="byline" style="text-align:center;">— Dr. Ana Munteanu, climatolog, oct. 2024</div>
+    </div>
+
+    <!-- COL 3 -->
+    <div>
+      <span class="tag gold">Internațional</span>
+      <h2 class="headline lg">Furtuna „Boris" Devastează Europa Centrală: Bilanț și Lecții</h2>
+      <div class="byline"><strong>Reuters / AFP</strong> &nbsp;|&nbsp; Viena, 20 oct. 2024</div>
+      <div class="body-text">
+        <p>Ciclonul extratropical <strong>Boris</strong> a provocat inundații catastrofale în Austria, Cehia, Polonia și România, soldate cu peste <em>24 de victime</em> și pagube estimate la <strong>6 miliarde euro</strong> în 72 de ore.</p>
+        <p>Moldova, deși nu s-a aflat în traiectoria directă a furtunii, a primit precipitații cu <em>300% peste medie</em> în raioanele din nord în zilele de 14–16 octombrie.</p>
+      </div>
+
+      <div class="sidebar-box" style="margin-top: 8px;">
+        <div class="box-title">🌍 Prognoza pe 7 Zile</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p><strong>22 oct:</strong> Ploi la nord, soare la sud&nbsp; 🌧️/☀️</p>
+          <p><strong>23–24 oct:</strong> Îngheț nocturn nord 🌡️ −1°C</p>
+          <p><strong>25–26 oct:</strong> Noros general &nbsp; 🌥️ +8°C</p>
+          <p><strong>27–28 oct:</strong> Soare temporar &nbsp; 🌤️ +11°C</p>
+          <p style="color:var(--gray); font-style:italic; margin-top:3px;">Sursa: SHS Moldova &amp; Copernicus</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-number left">Pag. 5</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">🌤️ Știați că?</span>
+    <strong style="color:#E8D8A0;">Îngheț negru</strong> = fenomen meteorologic în care temperatura aerului scade sub 0°C fără depunere vizibilă de gheață, extrem de periculos pentru plante. &nbsp;·&nbsp;
+    <strong style="color:#E8D8A0;">Copernicus</strong> = programul UE de observare a Pământului prin satelit, furnizând date climatice în timp real.
+  </div>
+</div>
+
+
+<!-- ████████████████████  PAGE 6 – WORLD NEWS + BACK  ████████████████████ -->
+<div class="page" style="padding-bottom: 40px;">
+  <div class="page-header">
+    <span>Moldova Azi &nbsp;·&nbsp; Vol. I, Nr. 1</span>
+    <span class="section-label">🌍 Informații din Lume</span>
+    <span>21 Octombrie 2024</span>
+  </div>
+  <hr class="thick">
+  <hr class="thin" style="margin-top:2px;">
+
+  <div class="section-title">Știri Internaționale &amp; Curiozități</div>
+
+  <div class="col-3" style="align-items:start; margin-top:6px;">
+
+    <!-- COL 1 -->
+    <div class="col-divider">
+      <span class="tag navy">Europa</span>
+      <h2 class="headline lg">UE Extinde Sprijinul pentru Moldova: 1,8 Miliarde Euro până în 2027</h2>
+      <div class="byline"><strong>Comisia Europeană / Redacția</strong> &nbsp;|&nbsp; Bruxelles, 17 oct. 2024</div>
+      <img src="https://images.unsplash.com/photo-1467912407355-245f30185020?w=400&q=80" class="article-img img-border" style="height:85px; object-fit:cover;" alt="EU Moldova" onerror="this.style.cssText='height:85px;background:#0050aa;display:block;width:100%;'">
+      <div class="caption">Drapelele UE și Moldovei la Bruxelles. Foto: Comisia Europeană</div>
+      <div class="body-text" style="margin-top:4px;">
+        <p>Comisia Europeană a aprobat un pachet de sprijin financiar de <strong>1,8 miliarde euro</strong> pentru Moldova în cadrul <em>Moldova Support Package</em>, destinat reformelor de aderare, infrastructurii și rezilienței energetice până în 2027.</p>
+        <p>Președinta <strong>Maia Sandu</strong> a salutat decizia, subliniind că Moldova <em>„este mai aproape ca niciodată de obiectivul european."</em></p>
+      </div>
+    </div>
+
+    <!-- COL 2 -->
+    <div class="col-divider">
+      <span class="tag red">Conflict</span>
+      <h2 class="headline lg">Ucraina: Al 975-lea Zi de Război. Ajutor Militar Suplimentar din SUA</h2>
+      <div class="byline"><strong>AP / Reuters</strong> &nbsp;|&nbsp; Kiev / Washington, 20 oct. 2024</div>
+      <div class="body-text">
+        <p>Casa Albă a anunțat un pachet de asistență militară suplimentară pentru Ucraina în valoare de <strong>500 milioane de dolari</strong>, incluzând rachete ATACMS cu rază lungă și sisteme de apărare antiaeriană.</p>
+        <p>Frontul de est rămâne relativ stabil, cu lupte intense în zona <em>Avdiivka și Kupiansk</em>. Negocierile de pace nu sunt pe agenda niciunei dintre părți, potrivit analiștilor NATO.</p>
+        <p>Moldova monitorizează îndeaproape situația; <strong>Armata Națională</strong> a efectuat exerciții comune cu Garda Națională Română în săptămâna 14–18 octombrie.</p>
+      </div>
+    </div>
+
+    <!-- COL 3 -->
+    <div>
+      <span class="tag gold">Economie</span>
+      <h2 class="headline lg">FMI Revizuiește în Sus Creșterea Economică Globală la 3,2% în 2024</h2>
+      <div class="byline"><strong>FMI / Bloomberg</strong> &nbsp;|&nbsp; Washington, 15 oct. 2024</div>
+      <div class="body-text">
+        <p>Fondul Monetar Internațional și-a revizuit prognozia de creștere economică globală la <strong>3,2%</strong> pentru 2024, cu 0,1 puncte procentuale față de estimarea din iulie, impulsionat de SUA și economiile emergente din Asia.</p>
+        <p>Pentru Moldova, FMI estimează o creștere de <strong>4,1%</strong> în 2024, susținută de remitențe, investiții UE și redresarea sectorului agricol.</p>
+      </div>
+
+      <div class="sidebar-box" style="margin-top: 8px;">
+        <div class="box-title">📈 Indicatori Moldova oct. 2024</div>
+        <div class="body-text" style="font-size: 7pt;">
+          <p>💱 <strong>Curs:</strong> 1 EUR = 19,42 MDL</p>
+          <p>📊 <strong>Inflație:</strong> 5,1% (an/an)</p>
+          <p>👷 <strong>Șomaj:</strong> 3,8%</p>
+          <p>⛽ <strong>Benzină:</strong> 22,14 lei/litru</p>
+          <p style="color:var(--gray); font-style:italic; margin-top:3px;">Sursa: BNM / INS, oct. 2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="thin" style="margin: 8px 0;">
+
+  <!-- CURIOSITIES / KNOWLEDGE SECTION -->
+  <div style="background: #F0EDE4; border: 1px solid #ccc; border-top: 3px solid var(--gold); padding: 8px 10px;">
+    <div style="font-family: 'Oswald', sans-serif; font-size: 9pt; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;">
+      💡 Curiozități ale Ediției — Vol. I, Nr. 1
+    </div>
+    <div class="col-3" style="gap: 12px;">
+      <div class="body-text" style="font-size: 7pt;">
+        <p>🌍 <strong>Moldova este cel mai mic stat din Europa de Est</strong> cu o suprafață de 33.846 km², dar are una dintre cele mai dense rețele de râuri din regiune, cu peste 3.000 de cursuri de apă.</p>
+        <p>🍷 Vinul moldovenesc <strong>Purcari</strong> a primit note de 95/100 de la Wine Spectator, concurând cu marile vinuri franceze și italiene.</p>
+      </div>
+      <div class="body-text" style="font-size: 7pt;">
+        <p>🤖 Primul robot cu inteligență artificială produs <em>în totalitate</em> în Moldova a fost prezentat în 2023 de studenții UTM și a câștigat premiul I la competiția RoboChallenge din București.</p>
+        <p>🌱 Republica Moldova deține <strong>36 de rezervații naturale</strong>, inclusiv Codrii – una dintre ultimele păduri virgine din Europa Centrală.</p>
+      </div>
+      <div class="body-text" style="font-size: 7pt;">
+        <p>📡 Moldova a lansat în 2023 primul <strong>satelit național</strong> (CubeSat), realizat de studenți din Chișinău în parteneriat cu ESA – Agenția Spațială Europeană.</p>
+        <p>💧 Lacul Beleu din sudul Moldovei este inclus în <em>Lista Ramsar</em> a zonelor umede de importanță internațională, adăpostind peste 220 de specii de păsări migratoare.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER MASTHEAD -->
+  <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--navy); padding-top: 5px;">
+    <div style="font-family: 'Playfair Display', serif; font-size: 14pt; font-weight: 900; color: var(--navy);">Moldova Azi</div>
+    <div style="font-size: 6.5pt; color: var(--gray); text-align: center; line-height: 1.5;">
+      Redacția: bd. Ștefan cel Mare 105, Chișinău &nbsp;|&nbsp; redactie@moldovaazi.md &nbsp;|&nbsp; www.moldovaazi.md<br>
+      <em>Reproducerea parțială sau integrală a materialelor este permisă numai cu citarea sursei.</em>
+    </div>
+    <div style="font-family: 'Oswald', sans-serif; font-size: 7pt; color: var(--gray); text-align: right;">
+      ISSN 2456-7891<br>Vol. I &nbsp;·&nbsp; Nr. 1 &nbsp;·&nbsp; Oct. 2024
+    </div>
+  </div>
+
+  <div class="page-number left">Pag. 6</div>
+  <div class="curiosity-bar">
+    <span class="curio-label">📖 Glosar</span>
+    <strong style="color:#E8D8A0;">Ramsar</strong> = convenție internațională privind protecția zonelor umede, semnată la Ramsar (Iran) în 1971. &nbsp;·&nbsp;
+    <strong style="color:#E8D8A0;">CubeSat</strong> = nanosatelit de mici dimensiuni (10×10×10 cm), utilizat în cercetare și educație.
+  </div>
+</div>
+
+</body>
+</html>
